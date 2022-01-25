@@ -15,32 +15,108 @@
     <div class="container-wrapper">
         <div class="container-main">
             <div class="container-content" id="formula">
-                3+2-14/3
             </div>
             <div class="container-content" id="recent-formula">
             </div>
 
-            <button class="button-function button" type="button" onclick=null>
-                <img src= "01.png" width= 60% height= 60%>
+            <button class="button-function button" type="button" onclick="click_backspace()">
+                <img src= "01.png" width= "60%" height= "60%">
             </button>
-            <button class="button-function button" type="button" onclick=null>+</button>
-            <button class="button" type="button" onclick=null>1</button>
-            <button class="button" type="button" onclick=null>2</button>
-            <button class="button" type="button" onclick=null>3</button>
-            <button class="button-function button" type="button" onclick=null>-</button>
-            <button class="button" type="button" onclick=null>4</button>
-            <button class="button" type="button" onclick=null>5</button>
-            <button class="button" type="button" onclick=null>6</button>
-            <button class="button-function button" type="button" onclick=null>x</button>
-            <button class="button" type="button" onclick=null>7</button>
-            <button class="button" type="button" onclick=null>8</button>
-            <button class="button" type="button" onclick=null>9</button>
-            <button class="button-function button" type="button" onclick=null>÷</button>
-            <button class="button-function button" type="button" onclick=null>C</button>
-            <button class="button" type="button" onclick=null>0</button>
-            <button class="button-function button" type="button" onclick=null>.</button>
-            <button class="button-function button" type="button" onclick=null>=</button>
+            <button class="button-function button" id="divide" type="button" data-value="/" onclick="click_operator(event)" >÷</button>
+            <button class="button-number button" id="number7" type="button" data-value="7" onclick="click_number(event)">7</button>
+            <button class="button-number button" id="number8" type="button" data-value="8" onclick="click_number(event)">8</button>
+            <button class="button-number button" id="number9" type="button" data-value="9" onclick="click_number(event)">9</button>
+            <button class="button-function button" id="multiply" type="button" data-value="*" onclick="click_operator(event)">×</button>
+            <button class="button-number button" id="number4" type="button" data-value="4" onclick="click_number(event)">4</button>
+            <button class="button-number button" id="number5" type="button" data-value="5" onclick="click_number(event)">5</button>
+            <button class="button-number button" id="number6" type="button" data-value="6" onclick="click_number(event)">6</button>
+            <button class="button-function button" id="minus" type="button" data-value="-" onclick="click_operator(event)">−</button>
+            <button class="button-number button" id="number1" type="button" data-value="1" onclick="click_number(event)">1</button>
+            <button class="button-number button" id="number2" type="button" data-value="2" onclick="click_number(event)">2</button>
+            <button class="button-number button" id="number3" type="button" data-value="3" onclick="click_number(event)">3</button>
+            <button class="button-function button" id="plus" type="button" data-value="+" onclick="click_operator(event)">+</button>
+            <button class="button-function button" id="clear" type="button" onclick="clear_all()">C</button>
+            <button class="button-number button" id="number0" type="button" data-value="0" onclick="click_number(event)">0</button>
+            <button class="button-function button" id="period" type="button" data-value="." onclick="click_number(event)">.</button>
+            <button class="button-function button" id="equal" type="button" onclick="click_equal()">=</button>
         </div>
     </div>
+    <script>
+        const formula_container = document.getElementById('formula')
+        const recent_fomulaContainer = document.getElementById('recent-formula')
+
+        console.log(formula_container.innerText)
+    
+        let operand
+        let operator
+        let expression
+        let condition = 0
+        let result
+        let modifiedExpression
+
+        /* 수식창을 rendering하는 함수 */
+        function render_formula() {
+            switch (condition) {
+                case 1 : formula_container.innerText += `${operand}`;    break;
+                case 2 : formula_container.innerText += `${operator}`;   break;
+                case 3 : formula_container.innerText = `${result}`;     break;
+                case 4 : formula_container.innerText = `${modifiedExpression}`;  break;
+            }
+        }
+
+        /* 수식 log창을 rendering하는 함수 */
+        function render_recentFormula() {
+            recent_fomulaContainer.innerText = expression
+        }
+
+        /* 숫자 버튼이 눌렸을 때 수식창에 숫자와 .가 나타나는 함수 */
+        function click_number(e) {
+            condition = 1
+            operand = e.target.dataset.value
+            render_formula()
+        }
+
+        /* 사칙연산 버튼을 눌렀을 때 수식창에 기호가 나타나는 함수 */
+        function click_operator(e) {
+            condition = 2
+            operator = e.target.dataset.value
+            render_formula()
+        }
+
+        /* = 버튼을 눌렀을 때 수식이 계산되어 수식창에 결과가 나타나는 함수 */
+        function click_equal() {
+            condition = 3
+            expression = formula_container.innerText;
+            result = eval(expression)
+
+            render_recentFormula()
+            render_formula()
+        }
+  
+        /* backspace 버튼을 눌렀을 때 수식창에 글자가 하나씩 사라지는 함수 */
+        function click_backspace() {
+            condition = 4
+
+            let lastCharacter = formula_container.innerText.length - 1
+            modifiedExpression = formula_container.innerText.slice(0, -1)
+
+            render_formula()
+        }
+
+        /* C 버튼을 눌렀을 때 수식창 및 수식 log창의 innerText가 empty가 되는 함수 */
+        function clear_all() {
+            clear_formula()
+            clear_recentFormula()
+        }
+
+        function clear_formula() {
+            formula_container.innerText = null;
+        }
+
+        function clear_recentFormula() {
+            recent_fomulaContainer.innerText = null;
+        }
+
+    </script>
 </body>
 </html>
