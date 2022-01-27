@@ -15,37 +15,36 @@
     <div class="container-wrapper">
         <div class="container-main">
             <div class="container-content" id="formula">
+                0
             </div>
             <div class="container-content" id="recent-formula">
             </div>
 
-            <button class="button-function button" type="button" onclick="click_backspace()">
+            <button class="button-function button" type="button" onclick="clickBackspace()">
                 <img src= "01.png" width= "60%" height= "60%">
             </button>
-            <button class="button-function button" id="divide" type="button" data-value="/" onclick="click_operator(event)" >÷</button>
-            <button class="button-number button" id="number7" type="button" data-value="7" onclick="click_number(event)">7</button>
-            <button class="button-number button" id="number8" type="button" data-value="8" onclick="click_number(event)">8</button>
-            <button class="button-number button" id="number9" type="button" data-value="9" onclick="click_number(event)">9</button>
-            <button class="button-function button" id="multiply" type="button" data-value="*" onclick="click_operator(event)">×</button>
-            <button class="button-number button" id="number4" type="button" data-value="4" onclick="click_number(event)">4</button>
-            <button class="button-number button" id="number5" type="button" data-value="5" onclick="click_number(event)">5</button>
-            <button class="button-number button" id="number6" type="button" data-value="6" onclick="click_number(event)">6</button>
-            <button class="button-function button" id="minus" type="button" data-value="-" onclick="click_operator(event)">−</button>
-            <button class="button-number button" id="number1" type="button" data-value="1" onclick="click_number(event)">1</button>
-            <button class="button-number button" id="number2" type="button" data-value="2" onclick="click_number(event)">2</button>
-            <button class="button-number button" id="number3" type="button" data-value="3" onclick="click_number(event)">3</button>
-            <button class="button-function button" id="plus" type="button" data-value="+" onclick="click_operator(event)">+</button>
-            <button class="button-function button" id="clear" type="button" onclick="clear_all()">C</button>
-            <button class="button-number button" id="number0" type="button" data-value="0" onclick="click_number(event)">0</button>
-            <button class="button-function button" id="period" type="button" data-value="." onclick="click_number(event)">.</button>
-            <button class="button-function button" id="equal" type="button" onclick="click_equal()">=</button>
+            <button class="button-function button" id="divide" type="button" data-value="/" onclick="clickOperator(event)" >÷</button>
+            <button class="button-number button" id="number7" type="button" data-value="7" onclick="clickNumber(event)">7</button>
+            <button class="button-number button" id="number8" type="button" data-value="8" onclick="clickNumber(event)">8</button>
+            <button class="button-number button" id="number9" type="button" data-value="9" onclick="clickNumber(event)">9</button>
+            <button class="button-function button" id="multiply" type="button" data-value="*" onclick="clickOperator(event)">×</button>
+            <button class="button-number button" id="number4" type="button" data-value="4" onclick="clickNumber(event)">4</button>
+            <button class="button-number button" id="number5" type="button" data-value="5" onclick="clickNumber(event)">5</button>
+            <button class="button-number button" id="number6" type="button" data-value="6" onclick="clickNumber(event)">6</button>
+            <button class="button-function button" id="minus" type="button" data-value="-" onclick="clickOperator(event)">−</button>
+            <button class="button-number button" id="number1" type="button" data-value="1" onclick="clickNumber(event)">1</button>
+            <button class="button-number button" id="number2" type="button" data-value="2" onclick="clickNumber(event)">2</button>
+            <button class="button-number button" id="number3" type="button" data-value="3" onclick="clickNumber(event)">3</button>
+            <button class="button-function button" id="plus" type="button" data-value="+" onclick="clickOperator(event)">+</button>
+            <button class="button-function button" id="clear" type="button" onclick="clearAll()">C</button>
+            <button class="button-number button" id="number0" type="button" data-value="0" onclick="clickNumber(event)">0</button>
+            <button class="button-function button" id="period" type="button" data-value="." onclick="clickNumber(event)">.</button>
+            <button class="button-function button" id="equal" type="button" onclick="clickEqual()">=</button>
         </div>
     </div>
     <script>
-        const formula_container = document.getElementById('formula')
-        const recent_fomulaContainer = document.getElementById('recent-formula')
-
-        console.log(formula_container.innerText)
+        const formulaContainer = document.getElementById('formula')
+        const recentFomulaContainer = document.getElementById('recent-formula')
     
         let operand
         let operator
@@ -55,66 +54,280 @@
         let modifiedExpression
 
         /* 수식창을 rendering하는 함수 */
-        function render_formula() {
+        function renderFormula() {
             switch (condition) {
-                case 1 : formula_container.innerText += `${operand}`;    break;
-                case 2 : formula_container.innerText += `${operator}`;   break;
-                case 3 : formula_container.innerText = `${result}`;     break;
-                case 4 : formula_container.innerText = `${modifiedExpression}`;  break;
+                // 숫자, .
+                case 1 :
+                    // 입력값이 숫자인 경우
+                    if(operand != '.') {
+                        // innerText의 값이 0인 경우
+                        if(formulaContainer.innerText == '0') {
+                            console.log("innerText의 값이 0인 경우")
+                            formulaContainer.innerText = `${operand}`;
+                        } else {
+                            console.log("innerText의 값이 0이 아닌 경우")
+                            formulaContainer.innerText += `${operand}`;
+                        }
+                    }
+                    // 입력값이 . 인 경우
+                    else if (operand == '.'){
+                        // innerText의 마지막 인덱스가 연산기호일 경우
+                        if (formulaContainer.innerText.slice(-1)[0] == '+' || formulaContainer.innerText.slice(-1)[0] == '-'
+                            || formulaContainer.innerText.slice(-1)[0] == '*' || formulaContainer.innerText.slice(-1)[0] == '/') {
+                                console.log('innerText의 마지막 인덱스가 연산기호일 경우')
+                                break;  // do nothing
+                            }
+                        // innerText의 마지막 인덱스가 .일 경우
+                        else if (formulaContainer.innerText[-1] == '.'){
+                            console.log('innerText의 마지막 인덱스가 .일 경우')
+                            break;      // do nothing
+                        }
+                        // innerText의 구분자로 자른 마지막 단어에 .이 포함되어 있을 경우
+                        else if (splitMulti(formulaContainer.innerText, ['+', '-', '*', '/']).slice(-1)[0].includes('.')) {
+                            console.log('innerText의 구분자로 자른 마지막 단어에 .이 포함되어 있을 경우')
+                            break;      // do nothing
+                        }
+                        // 위의 경우에 해당되지 않으면
+                        else {
+                            console.log('입력값이 .인 경우 해당무')
+                            formulaContainer.innerText += `${operand}`;
+                        }
+                    }
+                    break;
+
+                // 연산기호
+                case 2 :
+                    // innerText의 값이 '0' 
+                    if(formulaContainer.innerText == '0') {
+                        console.log('innerText의 값이 \'0\'')
+                        break;          // do nothing
+                    }
+                    // innerText의 마지막 인덱스가 .일 경우
+                    else if (formulaContainer.innerText.slice(-1)[0] == '.') {
+                        console.log('innerText의 마지막 인덱스가 .일 경우')
+                        break;          // do nothing
+                    }
+                    // innerText의 마지막 인덱스가 연산기호일 경우
+                    else if (formulaContainer.innerText.slice(-1)[0] == '+' || formulaContainer.innerText.slice(-1)[0] == '-'
+                            || formulaContainer.innerText.slice(-1)[0] == '*' || formulaContainer.innerText.slice(-1)[0] == '/') {
+                        console.log('innerText의 마지막 인덱스가 연산기호일 경우')
+                        break;          // do nothing
+                    }
+                    // innerText 안에 연산기호가 이미 있는 경우
+                    else if (isThereOperator(formulaContainer.innerText)) {
+                        console.log('innerText 안에 연산기호가 이미 있는 경우')
+                        // 수식 계산 후
+                        calculate(formulaContainer.innerText)
+
+                        // result 보이기
+                        formulaContainer.innerText = `${result}${operator}`
+                        expression = `${result}${operator}`
+                        recentFomulaContainer.innerText = `${expression}`
+                    }
+                    // 해당무
+                    else {
+                        console.log('입력값이 연산기호 해당무')
+                        formulaContainer.innerText += `${operator}`;
+                    }
+                    break;
+
+                // =를 눌렀을 때
+                case 3 :
+                    // innerText의 마지막 인덱스가 연산기호일 경우
+                    if (formulaContainer.innerText.slice(-1)[0] == '+' || formulaContainer.innerText.slice(-1)[0] == '-'
+                            || formulaContainer.innerText.slice(-1)[0] == '*' || formulaContainer.innerText.slice(-1)[0] == '/') {
+                        console.log('innerText의 마지막 인덱스가 연산기호일 경우')
+                        break;          // do nothing
+                    }
+                    // innerText 안에 연산기호가 없을 경우
+                    else if (!isThereOperator(formulaContainer.innerText)) {
+                        console.log('innerText 안에 연산기호가 없을 경우')
+                        break;          // do nothing
+                    }
+                    // 해당무
+                    else {
+                        console.log('입력값이 =인 경우 해당무')
+                        calculate(formulaContainer.innerText)
+                        formulaContainer.innerText = `${result}`;
+                        recentFomulaContainer.innerText = `${expression}`;
+                    }
+                    break;
+
+                // backspace를 눌렀을 때
+                case 4 : console.log('입력값이 backspace인 경우 해당무')
+                    formulaContainer.innerText = `${modifiedExpression}`;
+                    break;
             }
         }
 
+        // 문자열 안에 operator가 있는지 검사하여 boolean값을 반환하는 함수
+        function isThereOperator(innerText) {
+            if(innerText.includes('+'))
+                return true;
+
+            if(innerText.includes('-')) 
+                return true;
+
+            if(innerText.includes('*'))
+                return true;
+
+            if(innerText.includes('/'))
+                return true;
+            
+            return false;
+        }
+
+        // 여러 개의 구분자로 문자열을 분리하는 함수
+        function splitMulti(str, tokens) {
+            var tempChar = tokens[0];
+            for(var i = 1; i < tokens.length; i++){
+                str = str.split(tokens[i]).join(tempChar);
+            }
+            str = str.split(tempChar);
+            return str;
+        }
+
         /* 수식 log창을 rendering하는 함수 */
-        function render_recentFormula() {
-            recent_fomulaContainer.innerText = expression
+        function renderRecentFormula() {
+            recentFomulaContainer.innerText = expression
         }
 
         /* 숫자 버튼이 눌렸을 때 수식창에 숫자와 .가 나타나는 함수 */
-        function click_number(e) {
+        function clickNumber(e) {
             condition = 1
             operand = e.target.dataset.value
-            render_formula()
+            renderFormula()
+        }
+
+        function pressNumber() {
+
         }
 
         /* 사칙연산 버튼을 눌렀을 때 수식창에 기호가 나타나는 함수 */
-        function click_operator(e) {
+        function clickOperator(e) {
             condition = 2
             operator = e.target.dataset.value
-            render_formula()
+            renderFormula()
+        }
+
+        function pressOperator() {
+
         }
 
         /* = 버튼을 눌렀을 때 수식이 계산되어 수식창에 결과가 나타나는 함수 */
-        function click_equal() {
+        function clickEqual() {
             condition = 3
-            expression = formula_container.innerText;
-            result = eval(expression)
+            expression = formulaContainer.innerText;
 
-            render_recentFormula()
-            render_formula()
+            renderRecentFormula()
+            renderFormula()
+        }
+
+        function pressEnter() {
+
         }
   
         /* backspace 버튼을 눌렀을 때 수식창에 글자가 하나씩 사라지는 함수 */
-        function click_backspace() {
+        function clickBackspace() {
             condition = 4
 
-            let lastCharacter = formula_container.innerText.length - 1
-            modifiedExpression = formula_container.innerText.slice(0, -1)
+            let lastCharacter = formulaContainer.innerText.length - 1
+            modifiedExpression = formulaContainer.innerText.slice(0, -1)
 
-            render_formula()
+            renderFormula()
+        }
+
+        function pressBackspace() {
+
         }
 
         /* C 버튼을 눌렀을 때 수식창 및 수식 log창의 innerText가 empty가 되는 함수 */
-        function clear_all() {
-            clear_formula()
-            clear_recentFormula()
+        function clearAll() {
+            clearFormula()
+            clearRecentFormula()
         }
 
-        function clear_formula() {
-            formula_container.innerText = null;
+        function clearFormula() {
+            formulaContainer.innerText = 0;
         }
 
-        function clear_recentFormula() {
-            recent_fomulaContainer.innerText = null;
+        function clearRecentFormula() {
+            recentFomulaContainer.innerText = null;
+        }
+
+
+        // 사칙연산 함수
+        function calculate (str) {
+            let chooseOperator = 0
+
+            if (str.includes('+')) {
+                chooseOperator = 1
+            } else if (str.includes('-')) {
+                chooseOperator = 2
+            } else if (str.includes('*')) {
+                chooseOperator = 3
+            } else {
+                chooseOperator = 4
+            }
+
+            switch(chooseOperator) {
+                case 1 :
+                    result = sum(str)
+                    break;
+
+                case 2 :
+                    result = minus(str)
+                    break;
+
+                case 3 :
+                    result = multiply(str)
+                    break;
+
+                case 4 :
+                    result = divide(str)
+                    break;
+            }
+        }
+
+        function sum(str) {
+            let numbers = str.split('+')
+            // 소수점 계산 포함이면
+            if(str.includes('.')) {
+                return parseFloat(numbers[0]) + parseFloat(numbers[1])
+            }
+            return String(parseInt(numbers[0]) + parseInt(numbers[1]))
+        }
+
+        function minus(str) {
+            let numbers = str.split('-')
+            // 소수점 계산 포함이면
+            if(str.includes('.')) {
+                return String(parseFloat(numbers[0]) - parseFloat(numbers[1]))
+            }
+            return String(parseInt(numbers[0]) - parseInt(numbers[1]))
+        }
+
+        function multiply(str) {
+            let numbers = str.split('*')
+            // 소수점 계산 포함이면
+            if(str.includes('.')) {
+                return String(parseFloat(numbers[0]) * parseFloat(numbers[1]))
+            }
+            return String(parseInt(numbers[0]) * parseInt(numbers[1]))
+        }
+
+        function divide(str) {
+            let numbers = str.split('/')
+            // 나누는 수가 0이면
+            if(numbers[1] == '0') {
+                result = '0으로 나눌 수 없습니다.'
+                return
+            }
+            // 소수점 계산 포함이면
+            if(str.includes('.')) {
+                return String(parseFloat(numbers[0]) / parseFloat(numbers[1]))
+            }
+            return String(parseInt(numbers[0]) / parseFloat(numbers[1]))
         }
 
     </script>

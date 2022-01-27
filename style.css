@@ -9,6 +9,7 @@ html, body {
     display: flex auto;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .container-main {
@@ -26,6 +27,8 @@ html, body {
 
     border-width: 0.2rem;
     border-style: solid;
+
+    word-wrap: break-word;  /* 자동 줄바꿈 */
 }
 
 .container-main * {
